@@ -1,0 +1,97 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+int *removeDuplicateValues( int array[], int length, int *newLength );
+
+int main()
+{
+
+    int gameLevels = 0;
+    scanf( "%d", &gameLevels );
+
+    int littleXLevelCount = 0;
+    scanf( "%d", &littleXLevelCount );
+
+    int littleXLevels[littleXLevelCount];
+
+    for( int i = 0; i < littleXLevelCount; i++ ){
+        int x;
+        scanf( "%d", &x );
+
+        littleXLevels[i] = x;
+    }
+
+    int littleYLevelCount = 0;
+    scanf( "%d", &littleYLevelCount );
+
+    int littleYLevels[littleYLevelCount];
+
+    for( int i = 0; i < littleYLevelCount; i++ ){
+        int y;
+        scanf( "%d", &y );
+
+        littleYLevels[i] = y;
+    }
+
+    int mergedArrayLength = littleXLevelCount+littleYLevelCount;
+    int mergedArray[mergedArrayLength];
+    int indexForMergedArray = 0;
+
+    for( int i = 0; i<littleXLevelCount; i++ ){
+        mergedArray[indexForMergedArray] = littleXLevels[i];
+        indexForMergedArray++;
+    }
+
+    for( int i = 0; i<littleYLevelCount; i++ ){
+        mergedArray[indexForMergedArray] = littleYLevels[i];
+        indexForMergedArray++;
+    }
+
+    int newLength = 0;
+    int *uniqueArray = removeDuplicateValues( mergedArray, mergedArrayLength, &newLength );
+
+    free(uniqueArray);
+
+    if( newLength == gameLevels ){
+        printf( "%s", "I become the guy." );
+    }else{
+        printf( "%s", "Oh, my keyboard!" );
+    }
+
+    return 0;
+}
+
+
+int *removeDuplicateValues( int array[], int length, int *newLength ){
+
+    int *newArray = malloc( length * sizeof(int) );
+
+    int uniqueCopies = 0;
+
+    for( int i = 0; i < length; i++ ){
+        bool isUnique = true;
+        for( int j = 0; j < uniqueCopies; j++ ){
+
+            if( newArray[j] == array[i] ){
+                isUnique = false;
+                break;
+            }
+
+        }
+
+        if(isUnique){
+            newArray[uniqueCopies] = array[i];
+            uniqueCopies++;
+        }
+    }
+
+    if( uniqueCopies != length ){
+        newArray = realloc( newArray, uniqueCopies*sizeof(int) );
+    }
+
+    *newLength = uniqueCopies;
+
+    return newArray;
+
+}
