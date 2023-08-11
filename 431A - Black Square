@@ -1,0 +1,24 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main(){
+
+    int cals[4];
+    cin>>cals[0]>>cals[1]>>cals[2]>>cals[3];
+
+    string s;
+    cin>>s;
+
+    int total = 0;
+
+    for( char c : s ){
+        int idx = c-'0';
+        total += cals[idx-1];
+    }
+
+    cout << total << endl;
+
+    return 0;
+}
